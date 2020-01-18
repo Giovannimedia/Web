@@ -1,0 +1,525 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+
+<meta name="description" content="">
+<meta name="author" content="">
+
+<link rel="icon" href="build/e9c94a371a3abac3e01cf378154b54f0.favicon.png">
+
+<title></title>
+
+    <!-- Bootstrap core CSS -->
+<link href="build/2f624089c65f12185e79925bc5a7fc42.bootstrap.min.css" rel="stylesheet">
+
+<!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+<!--[if lt IE 9]>
+  <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+  <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+<![endif]-->
+
+  <link href="build/page.078e496841cf81e7b365.css" rel="stylesheet">
+    <!--This is the actual function that calls the form widget-->
+    
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/parsley.js/2.0.7/parsley.js"></script>
+    <script src="https://superphone.io/f/assets/javascripts/intlTelInput.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+    
+    <!--This is the favicon for the browser tab-->
+    <link rel="shortcut icon" href="https://app.superphone.io/favicon.ico" type="image/x-icon">
+    
+    <!--These are the stylesheets for the page-->
+    <link href="https://fonts.googleapis.com/css?family=Oswald:300" rel="stylesheet">
+    <link rel="stylesheet" href="https://superphone.io/f/assets/stylesheets/intlTelInput.css">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.1/css/all.css" integrity="sha384-mzrmE5qonljUremFsqc01SB46JvROS7bZs3IO2EmfFsd15uHvIt+Y8vEf7N7fWAU" crossorigin="anonymous">
+              <script type="text/javascript">
+
+        $(document).ready(function () {
+    
+            // Set up phone widget
+            $("#phone").intlTelInput({
+                utilsScript: 'https://superphone.io/f/assets/javascripts/utils.js',
+                numberType: "MOBILE",
+                nationalMode: false,
+                autoFormat: true,
+                autoPlaceholder: true
+            });
+    
+            // Click on button send
+            $('#addContact').submit(function (event) {
+                event.preventDefault();
+                var formData = $("#addContact").serializeArray();
+                $('#submitButton').prop('disabled', true);
+                $('.form-error').hide();
+    
+                // Convert the form data to backend format
+                var requestData = {};
+                formData.map(function (element) {
+                    requestData[element.name] = element.value;
+                });
+    
+                // Send post to API
+                $.ajax({
+                    url: 'https://superphone.io/w/GK7D2G', // Url where to submit the request
+                    type: "POST",
+                    beforeSend: function (request) {
+                        request.setRequestHeader("Access-Control-Allow-Origin", "*");
+                    },
+                    dataType: 'json',
+                    contentType: 'application/json',
+                    data: JSON.stringify(requestData),
+                    success: function (result) {
+                        // You can see the result from the console
+                        // tab of the developer tools
+                        console.log(result);
+                        $('.custom-form').hide();
+                        $('.form-success').show();
+                    },
+                    error: function (xhr, resp, text) {
+                        $('.form-error').show();
+                        $('#submitButton').prop('disabled', false);
+                    }
+                });
+            });
+        });
+    </script>
+      <style>
+    body {
+    background: linear-gradient(to bottom, #000000 50%, #101010 100%);
+    color: white;
+        }
+
+    .page-center {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+        }
+        
+        *{
+  font-family: 'Oswald', sans-serif;
+        }    
+
+    button#submitButton {
+    text-transform: uppercase;
+    margin: 15px 0px;
+    width: 100%;
+    color: white;
+    padding: 8px 45px;
+    font-size: 19px;
+    border: 1px solid white;
+    border-radius: 0px;
+    background: #101010;
+        }
+
+    button#submitButton:hover {
+    color: black;
+    background: white;
+        }
+
+    span.country-name {
+    color: black;
+    padding: 5px;
+    font-size: 16px;
+        }
+      
+    input#phone {
+    letter-spacing: 1px;
+    color: white;
+    border: 0px;
+    border-bottom: 2px solid white;
+    background: black;
+    padding: 26px 46px;
+    font-size: 17px;
+    border-radius: 0px;
+    font-weight: 700;
+        }
+        
+    input[type=text] {
+    width: 100%;
+    padding: 12px 20px;
+    margin: 8px 0;
+    display: inline-block;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-sizing: border-box;
+    height: 38px;
+        }
+    
+    .form-error {
+    padding-left: 12px;
+    display: none;
+    color: #D85959;
+        }
+    
+    .form-success {
+    border-radius: 5px;
+    background-color: #f2f2f2;
+    padding: 5px;
+    display: none;
+        }
+    
+    .parsley-required {
+    padding-top: 5px;
+    color: #D85959;
+        }
+    
+    .parsley-minlength {
+    padding-top: 5px;
+    color: #ffffff;
+        }
+    
+    .iti-flag {
+     background-image: url("https://superphone.io/f/assets/images/flags.png");
+        }
+
+    input#phone:focus {
+    box-shadow: 0px 0px 0px;
+        }
+        
+    .buto {
+    text-align: center;
+        }
+        
+    .form-success {
+    background: black;
+    color: white;
+    font-size: 19px;
+    width: 100%;
+    text-align: center;
+    margin-top: 61px;
+        }
+        
+    .form-error {
+    color: #ffffff;
+        }
+
+    </style>
+  </head>
+
+  <body class="main">
+
+    <div id="navbar-container" class="update-navbar-white update-navbar-show-button update-navbar-hide-take-me-to-superhuman" style="background: black;">
+      <nav class="navbar navbar-fixed-top">
+        <div class="container-fluid">
+          <div class="row take-me-to-superhuman-section">
+            <div class="take-me-to-superhuman-container">
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-xs-offset-1 col-xs-5 col-lg-offset-4 col-lg-4 logo">
+              <h2>
+                <div>Giovanni Media</div>
+              </h2>
+            </div>
+          </div>
+        </div>
+      </nav>
+    </div>
+
+    <div class="container-fluid header">
+    <div class="page-center">
+    <div class="custom-form">
+        <div class="container">
+            <h1 class="text-center" style="font-weight: bold; margin-bottom: 45px; ">BOOK A CONSULTATION</h1>
+            <p class="text-center" style="font-size: 21px">PLEASE ENTER YOUR PHONE NUMBER<br>AND WE WILL TEXT YOU RIGHT BACK TO SCHEDUALE YOUR CALL</p>
+            <form id="addContact" class="form-horizontal" style="min-width: 100%" method="POST" action="#" autocomplete="false" data-parsley-validate>
+                <div class="form-group">
+                    <div class="col-md-6 col-md-offset-3 col-sm-6 col-sm-offset-3 col-xs-10 col-xs-offset-1 col-lg-4 col-lg-offset-4">
+                        <input autocomplete="off" tabindex="4" type="tel" class="form-control" id="phone" name="mobile"
+                                placeholder="Mobile # (w/country code)" data-parsley-trigger="focusout"
+                                data-parsley-minlength="9" data-parsley-required>
+                    </div>
+                    <div class="col-md-6 col-md-offset-3 col-sm-6 col-sm-offset-3 col-xs-10 col-xs-offset-1 col-lg-4 col-lg-offset-4">
+                        <button type="submit" id="submitButton" class="btn btn-default">Submit</button>
+                    </div>
+                </div>
+    
+                <div class="form-group" style="padding-left: 12px">
+                    <div class="form-error container">
+                        <div class="buto">Something went wrong. Please check your mobile and try again.</div>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+    <!--This is the text for the success page-->
+    <div class="form-success">
+            <h1>Just texted you - please check your messages.</h1>
+    </div>
+    </div>
+    </div>
+
+    <div class="container-fluid introduction update-navbar-white update-navbar-show-button update-navbar-hide-take-me-to-superhuman">
+      <div class="row">
+        <div class="background"></div>
+        <div class="col-xs-offset-1 col-xs-10 col-sm-offset-3 col-sm-6 col-lg-offset-4 col-lg-4">
+          <div class="separator"></div>
+          <div class="wow fadeIn">
+          <h2 style="margin-bottom: 16px">
+            <div>Enhance your online presence and exponentially grow your consumer base</div>
+          </h2>
+          <div class="narrative">
+            <p>
+Social media sites and blogs reach over 80% of American internet users, and that number is still rising. If your brand does not have a presence on these services the opportunity costs can be immense, as market share is being ceded to competitors almost literally without a fight.            </p>
+            <p>
+Social media sites and blogs reach over 80% of American internet users, and that number is still rising. If your brand does not have a presence on these services the opportunity costs can be immense, as market share is being ceded to competitors almost literally without a fight.            </p>
+            <p>
+Whether your brand is just starting out and needs a boost, or has an established Social Media presence, Giovanni Media’s tailored marketing solutions will expand your horizons.            </p>
+          </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="container-fluid visually-gorgeous update-navbar-white update-navbar-show-button update-navbar-hide-take-me-to-superhuman">
+      <div class="row">
+        <div class="col-xs-12 col-lg-8">
+          <div class="row">
+            <div class="background"></div>
+          </div>
+        </div>
+        <div class="col-xs-12 col-lg-3">
+          <div class="row">
+            <div class="bar"></div>
+            <div class="col-xs-offset-1 col-xs-10 col-sm-offset-3 col-sm-6 col-lg-offset-0 col-lg-12">
+            <div class="wow fadeIn">
+              <div class="separator"></div>
+              <h2>
+                <div>Our ROI driven approach</div>
+              </h2>
+              <div class="narrative">
+                <p>
+Giovanni Media operates on a strategy designed to maximize our clients’ Return on Investment. This is in part because we pore over multiple strategies and employ advanced targeting algorithms to minimize Cost per Click and maximize lead generation.                </p>
+                <p>
+                  On average, we all spend 3 hours a day in email. When you use something for that long, it should be subtle, delightful, and gorgeous.
+                </p>
+              </div>
+            </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="container-fluid blazingly-fast update-navbar-white update-navbar-show-button update-navbar-hide-take-me-to-superhuman">
+      <div class="row">
+        <div class="background-image visible-xs-block"></div>
+        <video class="rocket-launch hidden-xs" loop autoplay poster="build/82829b6b1409a92e8129c41585245ae3.blazingly-fast-poster.jpg">
+          <source src="https://superhuman.com/build/708550bedc203cdcc375ee88fc5e9919.rocket-launch.mp4" type="video/mp4">
+        </video>
+        <div class="gradient"></div>
+        <div class="col-xs-offset-1 col-xs-10 col-sm-5 col-md-4 col-lg-4">
+        <div class="wow fadeIn">
+          <div class="separator"></div>
+          <h2>
+            <div>Specialized Targeting Measures</div>
+          </h2>
+          <div class="narrative">
+            <p>
+You want to ensure your marketing strategy is as efficient as possible. There’s no point in investing in an ad when you do not know your customer. Therefore, Giovanni Media keeps track of your customers’ most common similarities and uses this data to target similar audiences.            </p>
+            <p>
+              We've brought back the 100ms rule.  Everything you do — start-up, search, sending mail — is blazingly fast.
+            </p>
+            <p>
+              Experience the fastest email in the world.  There's no going back.
+            </p>
+          </div>
+        </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="container-fluid undo-send update-navbar-white update-navbar-show-button update-navbar-hide-take-me-to-superhuman">
+      <div class="row">
+        <div class="background"></div>
+        <div class="col-xs-offset-1 col-xs-10 col-sm-offset-1 col-sm-5 col-md-offset-1 col-md-4 col-lg-offset-1 col-lg-4">
+        <div class="wow fadeIn">
+          <div class="separator"></div>
+          <h2>
+            <div>Split Testing</div>
+          </h2>
+          <div class="narrative">
+            <p>
+We use a variety of methods to determine the most effective campaign strategy, one of the most effective of these is Split-Testing. Split-Testing is utilized when we want to measure results when there are a limited number of variances – by testing each variance.            </p>
+            <p>
+              We've built Undo Send right into Superhuman. Just click Undo, and it will be as if the email never sent.
+            </p>
+            <p>
+              Undo Send will change how you email.  You won't send typos.  You won't have regrets.  And best of all: you'll work faster, with more confidence than before.
+            </p>
+          </div>
+        </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="container-fluid cut-through-the-noise update-navbar-white update-navbar-show-button update-navbar-hide-take-me-to-superhuman">
+      <div class="row">
+        <div class="background"></div>
+        <div class="col-xs-12 col-lg-push-6 col-lg-offset-1 col-lg-4">
+          <div class="row">
+            <div class="col-xs-offset-1 col-xs-10 col-sm-offset-3 col-sm-6 col-lg-offset-0 col-lg-12">
+        <div class="wow fadeIn">
+          <div class="separator"></div>
+          <h2>
+            <div>Advanced Analytics</div>
+          </h2>
+          <div class="narrative">
+            <p>
+Assumptions are annoying. With our advanced analytics we’ll be able to see exactly which advertising strategy are working and which aren’t. At Giovanni Media, we regularly update our clients with every metric necessary to ensure there is minimal guesswork involved when it comes to your investments.
+            </p>
+            <p>
+              Quickly get to the messages you care most about.  Never miss important emails again.
+            </p>
+          </div>
+        </div>
+        </div>
+      </div>
+      </div>
+    </div>
+    </div>
+
+    <div class="container-fluid read-status update-navbar-white update-navbar-show-button update-navbar-hide-take-me-to-superhuman">
+      <div class="row">
+        <div class="col-xs-offset-1 col-xs-10 col-sm-5 col-lg-3 contents">
+          <div class="separator"></div>
+          <div class="wow fadeIn">
+          <h2>
+            <div>Remarketing</div>
+          </h2>
+          <h3>
+            <div>Read Statuses Built In</div>
+          </h3>
+          <div class="narrative">
+            <p>
+One of the benefits of our Advanced Analytics is that it allows for Remarketing to target those who may be on the fence about your brand. We analyze page clicks and views to retarget audience members who have shown an interest but have yet to commit themselves.            </p>
+            <p>
+              Superhuman shows when people read your emails — use this to get in touch at just the right time.  Close deals faster, manage more effectively, and respond with brilliant timing.
+            </p>
+          </div>
+          </div>
+        </div>
+        <div class="col-xs-12 col-lg-offset-1 col-lg-7">
+          <div class="row">
+            <div class="image-container">
+              <img src="build/33ee1266235bc0fda409347e9ec10459.read-status.jpg"/>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+
+    <div class="container-fluid follow-up update-navbar-white update-navbar-show-button update-navbar-hide-take-me-to-superhuman">
+      <div class="row">
+        <div class="bar"></div>
+        <div class="col-xs-12 col-lg-push-7 col-lg-4">
+          <div class="row">
+            <div class="col-xs-offset-1 col-xs-10 col-sm-offset-3 col-sm-6 col-lg-offset-0 col-lg-12">
+            <div class="wow fadeIn">
+              <div class="separator"></div>
+              <h2>
+                <div>Conversions and Scalability</div>
+              </h2>
+              <h3>
+                <div>Never Drop The Ball Again</div>
+              </h3>
+              <div class="narrative">
+                <p>
+At Giovanni Media our strategy is to maximize our clients’ ROI. One of the ways we achieve this is by developing a lead funnel and tweaking it to your brands’ strengths. Once the successful formula has been identified, it will be used to amplify your content reach and skyrocket lead generation                </p>
+                <p>
+                  Superhuman makes it simple.  When you send an email, just choose a time — for example, 2 days.  If you don't hear back by then, we'll remind you to follow up.  You'll follow up on time, every time.
+                </p>
+              </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-xs-12 col-lg-pull-4 col-lg-6">
+          <div class="image-container wow fadeInUp">
+            <img src="build/54cb25f65492cc3d75ac289850ba7124.follow-up-small.png" alt="Superhuman Reminders for iPhone"/>
+            <div class="baseline-strut"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="container-fluid two-up update-navbar-white update-navbar-show-button update-navbar-hide-take-me-to-superhuman">
+      <div class="row">
+        <div class="col-sm-12 col-md-6 scheduled-emails">
+          <div class="row">
+            <div class="overlay">
+              <div class="col-xs-offset-1 col-xs-10 col-sm-offset-3 col-sm-6 col-md-offset-2 col-md-8">
+              <div class="wow fadeIn">
+                <div class="separator"></div>
+                <h2>
+                  <div>Ensure Your Emails <nobr>Are Read</nobr></div>
+                </h2>
+                <h3>
+                  <div>Send At The Perfect Moment</div>
+                </h3>
+                <div class="narrative">
+                  <p>
+                    You sent a critical email, but didn't hear back. Why? Your message was buried by countless more that arrived later. With Superhuman, you can get back to the top of their inbox.
+                  </p>
+                  <p>
+                    When you send an email, just choose a time — for example, Monday at 8:55 am — and we'll deliver it precisely then. When your contact starts their day, they'll see your message first. No matter when you work, send at the perfect moment.
+                  </p>
+                </div>
+              </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-sm-12 col-md-6 snooze">
+          <div class="row">
+            <div class="overlay">
+              <div class="col-xs-offset-1 col-xs-10 col-sm-offset-3 col-sm-6 col-md-offset-2 col-md-8">
+              <div class="wow fadeIn">
+                <div class="separator"></div>
+                <h2>
+                  <div>Focus On What Matters</div>
+                </h2>
+                <h3>
+                  <div>Snooze The Rest For Later</div>
+                </h3>
+                <div class="narrative">
+                  <p>
+                    You're far more productive when your inbox is free of clutter.  But messages pile up.  Maybe you need time to think.  Or you're waiting on a colleague.  Or you just don't want to deal with it right now.
+                  </p>
+                  <p>
+                    Superhuman lets you snooze a conversation at any time.  Just choose when — for example, next week — and we'll remind you then.  Focus on what matters, and enjoy a more productive inbox.
+                  </p>
+                </div>
+              </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="container-fluid footer update-navbar-hide-on-desktop">
+  <div class="row">
+    <div class="col text-center">
+      <h2>
+        <div><a href="index.html">Giovanni Media</a></div>
+      </h2>
+      <div class="footer-content row">
+        <div class="footer-links-text col">
+          <a href="privacy.html">Privacy</a>
+          <a href="terms.html" style="margin-right: 0px;">Terms of Service</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<!--    <script type="text/javascript" src="build/078e496841cf81e7b365.page.js"></script>
+ --></body>
+</html>
